@@ -12,5 +12,9 @@ class PagesController extends Controller
         return view('pages.root');
     }
 
-
+    //路由验证
+    public function emailVerifyNotice(Request $request)
+    {
+        return view('pages.email_verify_notice');
+    }
 }

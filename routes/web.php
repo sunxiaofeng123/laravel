@@ -16,3 +16,15 @@ Route::get('/', 'PagesController@root')->name('root');
 
 Auth::routes();
 
+//登录后可以访问的页面
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/email_verify_notice', 'PagesController@emailVerifyNotice')->name('email_verify_notice');
+
+    //邮箱验证之后才可访问
+    Route::group(['middleware' => 'email_verified'], function() {
+        Route::get('/test', function() {
+            return 'Your email is verified';
+        });
+    });
+});
+
