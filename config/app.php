@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -176,6 +176,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //中文件插件提示包  1、composer require "overtrue/laravel-lang:~3.0" 2、注册到config/app.php; 3, 修改locale = zh-CN
+        Overtrue\LaravelLang\TranslationServiceProvider::class,
 
     ],
 
