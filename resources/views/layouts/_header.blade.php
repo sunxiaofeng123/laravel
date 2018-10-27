@@ -35,7 +35,7 @@
                                     {{ csrf_field() }}
                                 </form>
                             </li>
-                            <li><a>个人中心</a></li>
+                            <li><a href = "{{ route('user_addresses.index') }}">收获地址</a></li>
                         </ul>
 
                     </li>
