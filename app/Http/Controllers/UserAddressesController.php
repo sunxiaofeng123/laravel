@@ -21,6 +21,16 @@ class UserAddressesController extends Controller
     }
 
     public function store(UserAddressRequest $request) {
+        $request->user()->addresses()->create($request->only([
+            'province',
+            'city',
+            'district',
+            'address',
+            'zip',
+            'contact_name',
+            'contact_phone',
+        ]));
 
+        return redirect()->route('user_address.index');
     }
 }
