@@ -13,7 +13,7 @@ class UserAddressRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -31,6 +31,20 @@ class UserAddressRequest extends Request
             'zip'      => 'required',
             'contact_name' => 'required',
             'contact_phone'=> 'required',
+        ];
+    }
+    
+    //设置返回属性值
+    public function attributes()
+    {
+        return [
+            'province' => '省',
+            'city'     => '市',
+            'district' => '区／县',
+            'address'  => '地址',
+            'zip'      => '邮编',
+            'contact_name' => '联系人',
+            'contact_name' => '联系电话',
         ];
     }
 }
