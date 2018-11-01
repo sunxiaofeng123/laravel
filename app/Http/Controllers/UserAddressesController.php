@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserAddressRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserAddress;
 
@@ -21,8 +22,27 @@ class UserAddressesController extends Controller
     }
 
     public function store(UserAddressRequest $request) {
-        dump($request);die;
         $request->user()->addresses()->create($request->only([
+            'province',
+            'city',
+            'district',
+            'address',
+            'zip',
+            'contact_name',
+            'contact_phone',
+        ]));
+
+        return redirect()->route('user_addresses.index');
+    }
+
+    public function edit(UserAddress $user_address)
+    {
+        return view('user_address.create_and_edit', ['address' => $user_address]);
+    }
+
+    public function update(UserAddress $user_address, UserAddressRequest $request)
+    {
+        $user_address->update($request->only([
             'province',
             'city',
             'district',

@@ -22,11 +22,11 @@
                             @foreach($addresses as $address)
                                 <tr>
                                     <td>{{ $address->contact_name }}</td>
-                                    <td>{{ $address->full_address }}</td>
+                                    <td>{{ $address->address }}</td>
                                     <td>{{ $address->zip }}</td>
                                     <td>{{ $address->contact_phone }}</td>
                                     <td>
-                                        <button class = 'btn btn-primary'>修改</button>
+                                        <a class = 'btn btn-primary' href = "{{ route('user_addresses.edit', ['user_address' => $address->id]) }}">修改</a>
                                         <button class = 'btn btn-danger'>删除</button>
                                     </td>
 
