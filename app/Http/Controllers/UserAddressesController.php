@@ -54,4 +54,11 @@ class UserAddressesController extends Controller
 
         return redirect()->route('user_addresses.index');
     }
+
+    public function destroy(USerAddress $user_address)
+    {
+        $user_address->delete();
+
+        return [];
+    }
 }

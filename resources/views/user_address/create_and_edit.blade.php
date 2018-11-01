@@ -30,9 +30,10 @@
                              {{ method_field('PUT') }}
                         @else
                             <form class="form-horizontal" role="form" action = "{{ route('user_addresses.store') }}" method = "post">
-                            {{ csrf_field() }}
+
                         @endif
                             <!-- 引入 csrf token 字段 -->
+                        {{ csrf_field() }}
                         <!-- 注意这里多了 @change -->
                             <select-district :init-value = "{{ json_encode([$address->province, $address->city, $address->district]) }}" @change="onDistrictChanged" inline-template>
                                 <div class="form-group">
