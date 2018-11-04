@@ -23,53 +23,8 @@ class UserController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('用户列表')
             ->body($this->grid());
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->header('Detail')
-            ->description('description')
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->header('Edit')
-            ->description('description')
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->header('Create')
-            ->description('description')
-            ->body($this->form());
     }
 
     /**
@@ -81,55 +36,32 @@ class UserController extends Controller
     {
         $grid = new Grid(new User);
 
-        $grid->id('Id');
-        $grid->name('Name');
-        $grid->email('Email');
-        $grid->password('Password');
-        $grid->remember_token('Remember token');
-        $grid->email_verified('Email verified');
-        $grid->created_at('Created at');
-        $grid->updated_at('Updated at');
+        $grid->id('Id')->sortable(); //创建列名为ID的列
+        $grid->name('用户名');
+        $grid->email('邮箱');
+        $grid->email_verified('已验证邮箱')->display(function($value){
+            return $value ? '是' : '否';
+        });
+        $grid->created_at('创建时间');
+        $grid->updated_at('修改时间');
+
+        $grid->disableCreateButton(); //不显示创建按钮
+        $grid->actions(function($actions){
+            //不在美一行后面展示查看按钮
+            $actions->disableview();
+            //不在每一行后面展示删除按钮
+            $actions->disableDelete();
+            //不在每一行后面展示编辑按钮
+            $actions->disableEdit();
+        });
+
+        $grid->tools(function($tools){
+            $tools->batch(function ($batch){ //禁用批量删除
+                $batch->disableDelete();
+            });
+
+        });
 
         return $grid;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed   $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(User::findOrFail($id));
-
-        $show->id('Id');
-        $show->name('Name');
-        $show->email('Email');
-        $show->password('Password');
-        $show->remember_token('Remember token');
-        $show->email_verified('Email verified');
-        $show->created_at('Created at');
-        $show->updated_at('Updated at');
-
-        return $show;
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new User);
-
-        $form->text('name', 'Name');
-        $form->email('email', 'Email');
-        $form->password('password', 'Password');
-        $form->text('remember_token', 'Remember token');
-        $form->switch('email_verified', 'Email verified');
-
-        return $form;
     }
 }
