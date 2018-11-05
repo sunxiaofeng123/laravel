@@ -13,5 +13,7 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->get('users', 'UserController@index');
     $router->get('products', 'ProductsController@index');
+    $router->get('products/create', 'ProductsController@create');
+    $router->post('products', 'ProductsController@store');
 
 });

@@ -137,7 +137,7 @@ class ProductsController extends Controller
     {
         $form = new Form(new Product);
 
-        $form->text('title', '商品名称')->rules('require');
+        $form->text('title', '商品名称')->rules('required');
         $form->image('image', '封面图片')->rules('required|image');
         //富文本
         $form->editor('discription', '商品描述')->rules('required');
@@ -146,14 +146,14 @@ class ProductsController extends Controller
         //直接添加一对多的关联模型
         $form->hasMany('skus', 'SKU列表', function (Form\NestedForm $form){
             $form->text('title', 'SKU 名称')->rules('required');
-            $form->text('description', 'SKU 描述')->rules('required');
+            $form->text('discription', 'SKU 描述')->rules('required');
             $form->text('price', '单价')->rules('required|numeric|min:0.01');
             $form->text('stock', '库存')->rules('required|integer|min:0');
         });
-        $form->decimal('rating', 'Rating')->default(5.00);
-        $form->number('sold_count', 'Sold count');
-        $form->number('review_count', 'Review count');
-        $form->decimal('price', 'Price');
+
+        $form->saving(function(Form $form){
+            $form->model()->price = collect($form->input('skus'))->where(\Encore\Admin\Form::REMOVE_FLAG_NAME, 0)->min('price')?:0;
+        });
 
 
         return $form;
