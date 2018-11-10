@@ -12,7 +12,7 @@ class ProductsController extends Controller
     {
         $builder = Product::query()->where('on_sale', true);
 
-        if ($search = $request->input('order', '')) {
+        if ($search = $request->input('search', '')) {
             $like = '%'.$search.'%';
             $builder->where(function($query)use($like){
                 $query->where('title', 'like', $like)
@@ -24,7 +24,7 @@ class ProductsController extends Controller
             });
         }
 
-        if ($order = $request->input('title','')) {
+        if ($order = $request->input('order','')) {
             if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)){
                 if (in_array($m[1], ['price', 'sold_count', 'rating'])){
                     $builder->orderBy($m[1], $m[2]);
@@ -34,7 +34,13 @@ class ProductsController extends Controller
 
         $products = $builder->paginate(16);
 
-        return view('products.index', ['products' => $products]);
+        return view('products.index', [
+            'products' => $products,
+            'filters'  => [
+                'search' => $search,
+                'order'  => $order
+            ]
+        ]);
     }
 
     //展示详情
