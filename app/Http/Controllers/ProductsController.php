@@ -50,6 +50,6 @@ class ProductsController extends Controller
             throw new InvalidRequestException('商品未上架');
         }
 
-        return view('products.show', ['product' => $product]);
+        return view('products.show', ['products' => $product]);
     }
 }
