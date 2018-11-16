@@ -40,6 +40,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'user_favorite_products')
                 ->withTimestamps()
-                ->orderBy('user_favorite_products.create_at', 'desc');
+                ->orderBy('user_favorite_products.created_at', 'desc');
     }
 }

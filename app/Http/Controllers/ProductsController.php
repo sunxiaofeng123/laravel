@@ -53,6 +53,7 @@ class ProductsController extends Controller
         $favored = false;
         if ($user = $request->user()){
             $favored = boolval($user->favoriteProducts()->find($product->id));
+            
         }
 
         return view('products.show', ['products' => $product, 'favored' => $favored]);
