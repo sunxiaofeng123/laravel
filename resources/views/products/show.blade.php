@@ -36,7 +36,7 @@
                             <div class="cart_amount"><label>数量</label><input type="text" class="form-control input-sm" value="1"><span>件</span><span class="stock"></span></div>
                             <div class="button">
                                 @if($favored)
-                                    <button class="btn btn-primary btn-favor">收藏</button>
+                                    <button class="btn btn-primary btn-disfavor">取消收藏</button>
                                 @else
                                     <button class="btn btn-primary btn-favor">收藏</button>
                                 @endif
@@ -61,7 +61,7 @@
         </div>
     </div>
 @endsection
-@section('scriptAfterJs')
+@section('scriptsAfterJs')
     <script>
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
@@ -70,8 +70,8 @@
                 $('.product-info .stock').text('库存：' +$(this).data('stock')+'件');
             });
 
+            // 监听收藏按钮的点击事件
             $('.btn-favor').click(function () {
-                console.log(11111);
                 // 发起一个 post ajax 请求，请求 url 通过后端的 route() 函数生成。
                 axios.post('{{ route('products.favor', ['product' => $products->id]) }}')
                     .then(function () { // 请求成功会执行这个回调
@@ -89,6 +89,7 @@
                         }
                     });
             });
+
 
             $('.btn-disfavor').click(function(){
                 axios.delete('{{ route("products.disfavor", ["product" => $products->id]) }}')
