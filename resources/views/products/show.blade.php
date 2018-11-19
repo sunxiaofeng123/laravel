@@ -100,6 +100,30 @@
                             })
                     });
             });
+
+            //加入购物车接口
+            $('.ban-add-to-cart').click(function(){
+                axios().then(function(){
+                    swal('加入购物车','', 'success');
+                },function(error){
+                    if (error.response.status === 401) {
+                        swal('请先登录','','error');
+                    } else if (error.response.status === 422) {
+
+                        var html = '<div>';
+                        _.each(error.response.data.errors, function (errors) {
+                            _.each(errors, function (error) {
+                                html+=error+'<br>';
+                            })
+                        });
+
+                        html += '</div>';
+                        swal({content:$(html)[0], icon:'error'});
+                    } else {
+                        swal('系统错误', '', 'error');
+                    }
+                })
+            });
         });
     </script>
 @endsection
