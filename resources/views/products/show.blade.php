@@ -102,8 +102,11 @@
             });
 
             //加入购物车接口
-            $('.ban-add-to-cart').click(function(){
-                axios().then(function(){
+            $('.btn-add-to-cart').click(function(){
+                axios.post('{{ route('cart.add') }}', {
+                    sku_id:$('label.active input[name=skus]').val(),
+                    amount:$('.cart_amount input').val(),
+                }).then(function(){
                     swal('加入购物车','', 'success');
                 },function(error){
                     if (error.response.status === 401) {
