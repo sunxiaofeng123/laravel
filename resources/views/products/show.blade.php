@@ -66,7 +66,7 @@
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
             $('.sku-btn').click(function(){
-                $('.product-info .price span').text($(this)).data('price');
+                $('.product-info .price span').text($(this).data('price'));
                 $('.product-info .stock').text('库存：' +$(this).data('stock')+'件');
             });
 
