@@ -57,3 +57,26 @@
         </div>
     </div>
 @endsection
+@section('scriptsAfterJs')
+    <script>
+        $(document).ready(function(){
+            //监听移除按钮事件
+            $('.btn-remove').click(function () {
+                var id = $(this).closest('tr').data('id');
+                swal({
+                    title:"确认要将该商品移除",
+                    icon:'warning',
+                    buttons:['取消', '确定'],
+                    dangerMode:true,
+                }).then(function (willDelete) {
+                    if (!willDelete) {
+                        return;
+                    }
+                    axios.delete('/cart/'+id).then(function () {
+                        location.reload();
+                    });
+                })
+            });
+        });
+    </script>
+@endsection
