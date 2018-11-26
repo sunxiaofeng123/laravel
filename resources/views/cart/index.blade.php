@@ -42,6 +42,7 @@
                                             @endif
                                         </div>
                                     </td>
+                                    <td><span class="price">￥{{ $item->productSku->price }}</span></td>
                                     <td>
                                         <input type="text" class="form-control input-sm amount" @if(!$item->productSku->product->on_sale) disabled @endif name="amount" value="{{ $item->amount }}">
                                     </td>
@@ -76,6 +77,15 @@
                         location.reload();
                     });
                 })
+            });
+
+            //全选／取消全选
+            $('#select-all').change(function () {
+                var checked = $(this).prop('checked');
+
+                $('input[name=select][type=checkbox]:not([disabled])').each(function(){
+                    $(this).prop('checked', checked)
+                });
             });
         });
     </script>

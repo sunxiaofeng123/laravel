@@ -24,7 +24,7 @@
                                     @foreach($products->skus as $sku)
                                         <label class="btn btn-default sku-btn"
                                                data-price = "{{ $sku->price }}"
-                                               daata-stock = "{{ $sku->stock }}"
+                                               data-stock = "{{ $sku->stock }}"
                                                data-toggle="tooltip"
                                                title="{{ $sku->discription }}"
                                                 data-placement="bottom">
@@ -107,7 +107,9 @@
                     sku_id:$('label.active input[name=skus]').val(),
                     amount:$('.cart_amount input').val(),
                 }).then(function(){
-                    swal('加入购物车','', 'success');
+                    swal('加入购物车','', 'success').then(function(){
+                        location.href = '{{ route('cart.index') }}';
+                    });
                 },function(error){
                     if (error.response.status === 401) {
                         swal('请先登录','','error');

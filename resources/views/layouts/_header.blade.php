@@ -38,7 +38,9 @@
                             <li><a href = "{{ route('user_addresses.index') }}">收获地址</a></li>
                             <li><a href = "{{ route('products.favorites') }}">我的收藏</a></li>
                         </ul>
-
+                    </li>
+                    <li>
+                        <a href =" {{ route('cart.index') }}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                     </li>
                 @endguest
                 <!--注册登录结束-->

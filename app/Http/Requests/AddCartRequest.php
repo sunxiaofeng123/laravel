@@ -14,7 +14,7 @@ class AddCartRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -33,7 +33,7 @@ class AddCartRequest extends FormRequest
                         $fail('该商品不存在');
                         return;
                     }
-                    if ($sku->product->on_sale) {
+                    if (!$sku->product->on_sale) {
                         $fail('该商品未上架');
                         return;
                     }
