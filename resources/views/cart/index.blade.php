@@ -53,6 +53,32 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!--开始-->
+                    <div>
+                        <form class="form-horizontal" role="form" id = 'order-form'>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">选择收获地址</label>
+                                <div class="col-sm-9 col-md-7">
+                                    <select class="form-control" name="'address">
+                                        @foreach($addresses as $address)
+                                            <option value="{{ $address->id }}">{{ $address->full_address }} {{ $address->contact_name }} {{ $address->contact_phone }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">备注</label>
+                                <div class="col-sm-9 col-md-7">
+                                    <textarea name="remark" class="form-control" row="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-3">
+                                    <button type="button" class="btn btn-primary btn-create-color">提交订单</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
