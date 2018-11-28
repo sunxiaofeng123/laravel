@@ -37,7 +37,7 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'closed' => 'boolean',
+        'closed'   => 'boolean',
         'reviewed' => 'boolean',
         'address'  => 'json',
         'ship_data'=> 'json',
@@ -47,4 +47,44 @@ class Order extends Model
     protected $dates = [
         'paid_at',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        //监听模型创建事件，在写入数据库之前触发
+        static::creating(function($model){
+            if (!$model->no) {
+                $model->no = static::findAvailableNo();
+                if (!$model->no) {
+                    return false;
+                }
+            }
+        });
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public static function findAvailableNo()
+    {
+        $prefix = date('YmdHis');
+
+        for ($i = 0; $i < 10; $i++) {
+            $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+            if (!static::query()->where('no', $no)->exists()) {
+                return $no;
+            }
+        }
+
+        \Log::warning('find order no failed');
+        return false;
+    }
 }
