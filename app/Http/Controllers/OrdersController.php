@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InternalException;
+use App\Exceptions\InvalidRequestException;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
@@ -52,6 +54,9 @@ class OrdersController extends Controller
                 $item->productSku()->associate($sku);
                 $item->save();
                 $totalAmount += $sku->price * data['amount'];
+                if ($sku->decreaseStock($data['amount']) <= 0) {
+                    throw new InvalidRequestException('该商品库存不足');
+                }
             }
 
             $order->update(['total_amount' => $totalAmount]);
