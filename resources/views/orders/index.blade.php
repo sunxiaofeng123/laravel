@@ -35,10 +35,10 @@
                                                         </a>
                                                     </div>
                                                     <div>
-                                                        <span class="product_title">
+                                                        <span class="product-title">
                                                             <a target="_blank" href="{{ route('products.show',[$item->product_id]) }}">{{ $item->product->title }}</a>>
                                                         </span>
-                                                        <span class="sku_title">{{ $item->productSku->title }}</span>
+                                                        <span class="sku-title">{{ $item->productSku->title }}</span>
                                                     </div>
                                                 </td>
                                                 <td class="sku-price text-center">¥{{ $item->price }}</td>>
@@ -50,6 +50,7 @@
                             </li>>
                         @endforeach
                     </ul>
+                    <div class="pull-right">{{ $orders->render() }}</div>>
                 </div>
             </div>
         </div>
