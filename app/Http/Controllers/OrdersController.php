@@ -46,7 +46,7 @@ class OrdersController extends Controller
             $items = $request->input('items');
 
             foreach($items as $data) {
-                $sku = ProduccSku::find($data['sku_id']);
+                $sku = ProductSku::find($data['sku_id']);
                 $item = $order->items()->make([
                     'amount' => $data['amount'],
                     'price'  => $sku->price,
@@ -55,7 +55,7 @@ class OrdersController extends Controller
                 $item->product()->associate($sku->product_id);
                 $item->productSku()->associate($sku);
                 $item->save();
-                $totalAmount += $sku->price * data['amount'];
+                $totalAmount += $sku->price * $data['amount'];
                 if ($sku->decreaseStock($data['amount']) <= 0) {
                     throw new InvalidRequestException('该商品库存不足');
                 }
@@ -63,7 +63,7 @@ class OrdersController extends Controller
 
             $order->update(['total_amount' => $totalAmount]);
 
-            $skuIds = collect($request->inptu('items'))->pluck('sku_id');
+            $skuIds = collect($request->input('items'))->pluck('sku_id');
             $user->cartItems()->whereIn('product_sku_id', $skuIds)->delete();
 
             return $order;

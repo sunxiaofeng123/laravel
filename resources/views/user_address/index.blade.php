@@ -22,7 +22,7 @@
                             @foreach($addresses as $address)
                                 <tr>
                                     <td>{{ $address->contact_name }}</td>
-                                    <td>{{ $address->address }}</td>
+                                    <td>{{ $address->full_address }}</td>
                                     <td>{{ $address->zip }}</td>
                                     <td>{{ $address->contact_phone }}</td>
                                     <td>

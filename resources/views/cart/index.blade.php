@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3">选择收获地址</label>
                                 <div class="col-sm-9 col-md-7">
-                                    <select class="form-control" name="'address">
+                                    <select class="form-control" name="address">
                                         @foreach($addresses as $address)
                                             <option value="{{ $address->id }}">{{ $address->full_address }} {{ $address->contact_name }} {{ $address->contact_phone }}</option>
                                         @endforeach

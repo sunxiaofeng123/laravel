@@ -50,7 +50,7 @@
                             </li>>
                         @endforeach
                     </ul>
-                    <div class="pull-right">{{ $orders->render() }}</div>>
+                    <div class="pull-right">{{ $orders->render() }}</div>
                 </div>
             </div>
         </div>

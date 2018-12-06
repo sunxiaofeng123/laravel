@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\ProductSku;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
@@ -56,7 +57,7 @@ class OrderRequest extends FormRequest
                     }
                 }
             ],
-            'items.*.amount' => ['required', 'interger', 'min:1'],
+            'items.*.amount' => ['required', 'integer', 'min:1'],
         ];
 
     }
