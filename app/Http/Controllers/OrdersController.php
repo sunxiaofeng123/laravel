@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\InternalException;
 use App\Exceptions\InvalidRequestException;
 use App\Models\UserAddress;
+use App\Services\CartService;
 use DemeterChain\C;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
@@ -17,12 +18,12 @@ use App\Jobs\CloseOrder;
 class OrdersController extends Controller
 {
     //
-    public function store(OrderRequest $request)
+    public function store(OrderRequest $request, CartService $cartService)
     {
         $user = $request->user();
 
         //开始数据事务
-        $order = \DB::transaction(function()use($user, $request){
+        $order = \DB::transaction(function()use($user, $request, $cartService){
             $address = UserAddress::find($request->input('address_id'));
 
             $address->update(['last_used_at' => Carbon::now()]);
@@ -63,8 +64,8 @@ class OrdersController extends Controller
 
             $order->update(['total_amount' => $totalAmount]);
 
-            $skuIds = collect($request->input('items'))->pluck('sku_id');
-            $user->cartItems()->whereIn('product_sku_id', $skuIds)->delete();
+            $skuIds = collect($request->input('items'))->pluck('sku_id')->all();
+            $cartService->remove($skuIds);
 
             return $order;
         });
