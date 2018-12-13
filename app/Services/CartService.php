@@ -15,7 +15,7 @@ class CartService
 {
     public function get()
     {
-        return Auth::user()->cartItems()->with(['productSku.prodcut'])->get();
+        return Auth::user()->cartItems()->with(['productSku.product'])->get();
     }
 
     public function add($skuId, $amount)
