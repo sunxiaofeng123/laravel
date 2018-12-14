@@ -23,4 +23,18 @@ class PaymentController extends Controller
             'subject'      => '支付laravel shop 的订单：'.$order->no,
         ]);
     }
+
+    //前端回调
+    public function alipayReturn()
+    {
+        $data = app('alipay')->verify();
+        dd($data);
+    }
+
+    //服务器端回调
+    public function alipayNotify()
+    {
+        $data = app('alipay')->verify();
+        \Log::debug('Alipay notify', $data->all());
+    }
 }
