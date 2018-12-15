@@ -28,7 +28,6 @@ class PaymentController extends Controller
     public function alipayReturn()
     {
         $data = app('alipay')->verify();
-        dd($data);
     }
 
     //服务器端回调
