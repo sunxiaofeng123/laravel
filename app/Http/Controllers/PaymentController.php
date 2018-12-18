@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use Endroid\QrCode\QrCode;
 use App\Exceptions\InvalidRequestException;
 
 class PaymentController extends Controller
@@ -45,11 +46,16 @@ class PaymentController extends Controller
             throw new InvalidRequestException('订单状态不正确');
         }
 
-        return app('wechat_pay')->scan([
+        $wechatOrder = app('wechat_pay')->scan([
             'out_trade_no' => $order->no,
             'total_fee'    => $order->total_amount*100,
             'body'         => '支付laravel shop 的订单：'.$order->no,
         ]);
+
+        $qrCode = new QrCode($wechatOrder->code_url);
+
+        //将二维码以字符串形式输出，并带上相应的响应类型
+        return response($qrCode->writeString(), ['Content-type' => $qrCode->getContentType()]);
     }
 
     public function wechatNotify()
