@@ -8,7 +8,8 @@ use function foo\func;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UpdateProductSoldCount
+//implements ShouldQueue 代表监听器是异步
+class UpdateProductSoldCount implements ShouldQueue
 {
     /**
      * Create the event listener.
